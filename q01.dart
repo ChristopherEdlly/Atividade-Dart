@@ -8,6 +8,40 @@
 // OBS.: Se um bolo não estiver no cardápio, o programa deve imprimir algo assim ->
 // limão não está no cardápio
 
-void main() {
-  // ...implemente aqui a solução quando for fazer
+double calcularPrecoTotal(Map<String, double> boloPrecos, List <String> pedidos){
+    
+    double precoTotal = 0;
+    
+    for(String bolo in pedidos){
+        
+        if (boloPrecos.containsKey(bolo)){
+            precoTotal += boloPrecos[bolo]!;
+        
+        }
+    }
+    return precoTotal;
+}
+
+void identificarBolosInvalidos(Map<String, double> boloPrecos, List<String> pedidos) {
+    
+    for (String bolo in pedidos){
+      
+        if (!boloPrecos.containsKey(bolo)) {
+            print("$bolo não está no cardápio."); 
+        }    
+    }
+
+}
+
+void main(){
+    
+    const boloPrecos = {'ovos' : 5.5, 'chocolate' : 7.5, 'cenoura' : 6.5 };
+        
+    List <String> pedidos = ['ovos', 'chocolate'];
+    
+    double precoTotal = calcularPrecoTotal(boloPrecos, pedidos);
+    
+    identificarBolosInvalidos(boloPrecos, pedidos);
+    
+    print("Total = $precoTotal");
 }
