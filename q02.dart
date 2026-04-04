@@ -1,14 +1,66 @@
 // Questão 2
-// Série mostrada na imagem (transcrição clara):
-// S = 3^4/5 + 5^8/10 + 7^12/15 - 9^16/20 + 11^20/25 - 13^24/30 + 15^28/35 + ...
-// Padrões observados:
-// - Bases: 3, 5, 7, 9, ... (números ímpares consecutivos)
-// - Expoentes: 4, 8, 12, 16, ... (múltiplos de 4)
-// - Denominadores: 5, 10, 15, 20, ... (múltiplos de 5)
-// - Sinais: conforme a imagem: +, +, +, -, +, -, +, ... (confirme se deseja outro padrão)
-// Objetivo: Ler N (número de termos) e calcular S somando os N primeiros termos.
-// Exemplo: N = 3 => S = 3^4/5 + 5^8/10 + 7^12/15
+// Faça um algoritmo para ler o número de termos e calcular o valor da série abaixo:
+// S = 3^4!/5 + 5^8!/10 + 7^12!/15 - 9^16!/20 + 11^20!/25 - 13^24!/30 + 15^28!/35 + ...
+
+import 'dart:io';
 
 void main() {
-  // ...implemente aqui a solução quando for fazer
+  stdout.write('Digite o número de termos: ');
+  int n = int.parse(stdin.readLineSync()!);
+
+  List<String> numeradores = [];
+  List<String> denominadores = [];
+  List<String> sinais = [];
+
+  for (int i = 1; i <= n; i++) {
+    int base = 3 + (i - 1) * 2;
+    int expoente = 4 * i;
+    int denominador = i * 5;
+
+    String num = '$base^${expoente}!';
+    String den = '$denominador';
+    String sinal = (i > 3 && i % 2 == 0) ? '-' : '+';
+
+    numeradores.add(num);
+    denominadores.add(den);
+    sinais.add(sinal);
+  }
+
+  // Largura de cada termo = maior entre numerador e denominador
+  List<int> larguras = [];
+  for (int i = 0; i < n; i++) {
+    int larg = numeradores[i].length > denominadores[i].length
+        ? numeradores[i].length
+        : denominadores[i].length;
+    larguras.add(larg);
+  }
+
+  // Linha de cima (numeradores)
+  String linhaNum = 'S = ';
+  String linhaDiv = '    ';
+  String linhaDen = '    ';
+
+  for (int i = 0; i < n; i++) {
+    int larg = larguras[i];
+    String num = numeradores[i].padLeft((larg + numeradores[i].length) ~/ 2).padRight(larg);
+    String den = denominadores[i].padLeft((larg + denominadores[i].length) ~/ 2).padRight(larg);
+    String div = '-' * larg;
+
+    if (i == 0) {
+      linhaNum += num;
+      linhaDiv += div;
+      linhaDen += den;
+    } else {
+      String sinal = sinais[i];
+      linhaNum += '   $num';
+      linhaDiv += ' $sinal $div';
+      linhaDen += '   $den';
+    }
+  }
+
+  print('');
+  print(linhaNum);
+  print(linhaDiv);
+  print(linhaDen);
+  print('');
 }
