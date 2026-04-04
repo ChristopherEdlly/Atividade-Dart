@@ -8,35 +8,59 @@ void main() {
   stdout.write('Digite o número de termos: ');
   int n = int.parse(stdin.readLineSync()!);
 
-  double S = 0;
+  List<String> numeradores = [];
+  List<String> denominadores = [];
+  List<String> sinais = [];
 
-  // Calcular a série de termos
   for (int i = 1; i <= n; i++) {
-    double base = (3 + (i - 1) * 2).toDouble();
+    int base = 3 + (i - 1) * 2;
     int expoente = 4 * i;
-    double denominador = (i * 5).toDouble();
+    int denominador = i * 5;
 
-    // Calcular o fatorial
-    double fat = 1;
-    for (int j = 2; j <= expoente; j++) {
-      fat *= j;
-    }
+    String num = '$base^${expoente}!';
+    String den = '$denominador';
+    String sinal = (i > 3 && i % 2 == 0) ? '-' : '+';
 
-    // Calcular a base elevado ao fatorial
-    double potencia = 1;
-    for (int j = 0; j < fat; j++) {
-      potencia *= base;
-    }
-
-    double termo = potencia / denominador;
-
-    // Sinal: primeiros 3 positivos, depois alternando entre par=negativo e impar=positivo
-    if (i > 3 && i % 2 == 0) {
-      termo = -termo;
-    }
-
-    S += termo;
+    numeradores.add(num);
+    denominadores.add(den);
+    sinais.add(sinal);
   }
 
-  print('S = $S');
+  // Largura de cada termo = maior entre numerador e denominador
+  List<int> larguras = [];
+  for (int i = 0; i < n; i++) {
+    int larg = numeradores[i].length > denominadores[i].length
+        ? numeradores[i].length
+        : denominadores[i].length;
+    larguras.add(larg);
+  }
+
+  // Linha de cima (numeradores)
+  String linhaNum = 'S = ';
+  String linhaDiv = '    ';
+  String linhaDen = '    ';
+
+  for (int i = 0; i < n; i++) {
+    int larg = larguras[i];
+    String num = numeradores[i].padLeft((larg + numeradores[i].length) ~/ 2).padRight(larg);
+    String den = denominadores[i].padLeft((larg + denominadores[i].length) ~/ 2).padRight(larg);
+    String div = '-' * larg;
+
+    if (i == 0) {
+      linhaNum += num;
+      linhaDiv += div;
+      linhaDen += den;
+    } else {
+      String sinal = sinais[i];
+      linhaNum += '   $num';
+      linhaDiv += ' $sinal $div';
+      linhaDen += '   $den';
+    }
+  }
+
+  print('');
+  print(linhaNum);
+  print(linhaDiv);
+  print(linhaDen);
+  print('');
 }
