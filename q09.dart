@@ -4,5 +4,14 @@
 // característica.
 
 void main() {
-  // ...implemente aqui a solução quando for fazer
+  for (int num = 1000; num <= 9999; num++) {
+    int parte1 = num ~/ 100;
+    int parte2 = num % 100;
+
+    int soma = parte1 + parte2;
+
+    if (soma * soma == num) {
+      print(num);
+    }
+  }
 }
