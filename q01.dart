@@ -1,4 +1,4 @@
-// Questão 1
+// Questão 1 (Júlia Carolina Bispo Vasconcelos)
 // Dado o seguinte mapa de preços de bolos:
 // const boloPrecos = {'ovos' : 5,5, 'chocolate' : 7,5, 'cenoura' : 6,5, };
 // Escreva um programa em Dart para calcular o total para um determinado pedido.
